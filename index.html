@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冲出地球的喵喵 | 2026自由新章</title>
+    <!-- 引入精致字体（提升高级感） -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局重置：统一字体+更细腻的盒模型 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            scroll-behavior: smooth;
+            /* 禁止文字选中（提升体验） */
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* 核心：科幻主题背景（参照图片的深海蓝+科技光效+全息渐变） */
+        body {
+            /* 主渐变：匹配图片的深海蓝+紫调科幻色 */
+            background: linear-gradient(135deg, #050a27, #0a144b, #101e66);
+            /* 叠加科技纹理+全息光效（模拟图片的科技感） */
+            background-image: 
+                /* 科技网格纹理（低透明度，增加质感） */
+                radial-gradient(circle at 50% 50%, rgba(80, 120, 255, 0.05) 0%, transparent 80%),
+                /* 全息渐变光带（匹配图片的彩色光效） */
+                linear-gradient(90deg, rgba(255, 100, 150, 0.08) 0%, rgba(100, 180, 255, 0.1) 50%, rgba(255, 200, 100, 0.08) 100%),
+                /* 宇宙星点（弱化，避免干扰） */
+                radial-gradient(circle at 20% 80%, rgba(120, 180, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 150, 200, 0.08) 0%, transparent 50%);
+            /* 科幻背景固定+叠加模式 */
+            background-attachment: fixed;
+            background-blend-mode: soft-light;
+            color: #fff;
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+            /* 新增：科技扫描线动画（模拟科幻界面） */
+            overflow-x: hidden;
+        }
+        /* 科幻扫描线效果（低透明度，增加科技感） */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                transparent,
+                transparent 2px,
+                rgba(80, 120, 255, 0.03) 2px,
+                rgba(80, 120, 255, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 0;
+            animation: scanLineMove 8s linear infinite;
+        }
+        @keyframes scanLineMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* 星空粒子升级：科幻蓝调星星（匹配图片色调） */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            /* 科幻光晕：蓝/紫调 */
+            box-shadow: 0 0 4px rgba(100, 180, 255, 0.6);
+        }
+        /* 分层闪烁：科幻色区分大小 */
+        .star.small {
+            width: 1px;
+            height: 1px;
+            animation-duration: 2s;
+            opacity: 0.7;
+            background: #64b4ff;
+        }
+        .star.medium {
+            width: 2px;
+            height: 2px;
+            animation-duration: 3s;
+            opacity: 0.8;
+            background: #8093ff;
+        }
+        .star.large {
+            width: 3px;
+            height: 3px;
+            animation-duration: 4s;
+            background: #ff99cc;
+            opacity: 0.9;
+            box-shadow: 0 0 6px rgba(255, 153, 204, 0.7);
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.4; transform: scale(0.9); }
+        }
+
+        /* 顶部导航：科幻毛玻璃+科技边框 */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(5, 10, 39, 0.9); /* 匹配科幻背景色 */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 18px 0;
+            z-index: 999;
+            /* 科幻边框：蓝紫渐变 */
+            border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+            /* 科技阴影 */
+            box-shadow: 0 2px 15px rgba(0, 20, 80, 0.3);
+        }
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .nav-logo {
+            font-size: 1.3rem;
+            /* 科幻渐变文字：蓝金 */
+            background: linear-gradient(to right, #64b4ff, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            /* 奶凶喵喵logo */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-logo::before {
+            content: "😼";
+            font-size: 1.5rem;
+            transform: rotate(-10deg);
+            animation: headShake 4s ease-in-out infinite;
+        }
+        /* 喵喵摇头动画：奶凶萌感 */
+        @keyframes headShake {
+            0% { transform: rotate(-10deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(-10deg); }
+        }
+        .nav-links a {
+            color: #f5f5f5; /* 更亮的文字，提升对比度 */
+            text-decoration: none;
+            margin-left: 24px;
+            transition: all 0.3s ease;
+            font-weight: 500; /* 加粗字体，更清晰 */
+            position: relative;
+            font-size: 1.05rem; /* 微调字体大小 */
+        }
+        /* 导航下划线动效：科幻蓝渐变 */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #64b4ff, #ff99cc);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #64b4ff;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 主体容器：优化层级+内边距 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 头部标题：萌系+科幻光效 */
+        header {
+            text-align: center;
+            padding: 90px 0 50px;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.1); /* 科幻边框 */
+        }
+        h1 {
+            font-size: 3.8rem;
+            margin-bottom: 18px;
+            /* 科幻渐变标题：匹配图片的彩色光效 */
+            background: linear-gradient(to right, #ffd700, #64b4ff, #ff99cc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            /* 科幻文字光晕 */
+            text-shadow: 0 0 15px rgba(100, 180, 255, 0.4), 0 2px 4px rgba(0, 20, 80, 0.3);
+            animation: float 4s ease-in-out infinite;
+            font-weight: 700;
+        }
+        /* 更丝滑的浮动动画 */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0); }
+        }
+        /* 标题里的喵喵：奶凶+火箭结合 */
+        h1 span {
+            display: inline-block;
+            transform: rotate(5deg);
+            animation: pawWave 3s ease-in-out infinite;
+        }
+        @keyframes pawWave {
+            0% { transform: rotate(5deg) scale(1); }
+            50% { transform: rotate(-5deg) scale(1.1); }
+            100% { transform: rotate(5deg) scale(1); }
+        }
+        .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 28px;
+            /* 渐变文字：科幻粉蓝 */
+            background: linear-gradient(to right, #64b4ff, #ff99cc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 500; /* 加粗，更清晰 */
+            text-shadow: 0 0 2px rgba(0,20,80,0.2);
+        }
+        /* 奶凶喵喵按钮：科幻渐变+科技边框 */
+        .meow-icon {
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            /* 科幻渐变背景 */
+            background: linear-gradient(135deg, rgba(100, 180, 255, 0.15), rgba(255, 153, 204, 0.1));
+            padding: 12px 24px;
+            border-radius: 50px;
+            /* 科技边框 */
+            border: 1px solid rgba(100, 180, 255, 0.3);
+            color: #fff; /* 按钮文字用白色，更清晰 */
+            /* 科幻光晕 */
+            box-shadow: 0 0 10px rgba(100, 180, 255, 0.1);
+        }
+        .meow-icon:hover {
+            transform: rotate(8deg) scale(1.1);
+            background: linear-gradient(135deg, rgba(100, 180, 255, 0.2), rgba(255, 153, 204, 0.15));
+            box-shadow: 0 0 20px rgba(100, 180, 255, 0.3);
+        }
+        /* 语录框：科幻毛玻璃 */
+        .quote-box {
+            margin-top: 24px;
+            padding: 20px;
+            background: rgba(5, 10, 39, 0.7); /* 匹配科幻背景 */
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            color: #fff; /* 语录文字用白色，更清晰 */
+            display: none;
+            border: 1px solid rgba(100, 180, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 20, 80, 0.3);
+            font-size: 1.1rem;
+            font-weight: 500; /* 加粗 */
+        }
+
+        /* 自由宣言：核心优化！科幻背景+清晰文字 */
+        .declaration {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .declaration h2 {
+            /* 科幻渐变标题 */
+            background: linear-gradient(to right, #64b4ff, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 28px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 700; /* 加粗标题 */
+            text-shadow: 0 0 8px rgba(100, 180, 255, 0.3); /* 科幻光晕 */
+        }
+        .declaration h2::before,
+        .declaration h2::after {
+            content: "🐾";
+            animation: pawTap 2s ease-in-out infinite;
+            font-size: 1.5rem; /* 放大猫爪，更醒目 */
+        }
+        @keyframes pawTap {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .declaration p {
+            font-size: 1.3rem; /* 放大字体 */
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 2; /* 增加行高，提升可读性 */
+            color: #ffffff; /* 改用纯白色，最大化对比度 */
+            font-weight: 500; /* 加粗文字 */
+            /* 科幻毛玻璃背景 */
+            background: rgba(5, 10, 39, 0.6); /* 匹配科幻主色 */
+            backdrop-filter: blur(8px);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid rgba(100, 180, 255, 0.15); /* 科幻边框 */
+            box-shadow: 0 4px 20px rgba(0, 20, 80, 0.25); /* 科技阴影 */
+            text-shadow: 0 0 1px rgba(0,20,80,0.3); /* 轻微文字阴影，提升辨识度 */
+        }
+
+        /* 成长轨迹：科幻时间线+奶凶图标 */
+        .timeline {
+            padding: 60px 0;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        .timeline-item:hover {
+            transform: translateX(12px);
+        }
+        /* 科幻渐变时间线+光晕 */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: -50px;
+            width: 2px;
+            /* 科幻渐变：蓝-粉-透明 */
+            background: linear-gradient(to bottom, #64b4ff, #ff99cc, transparent);
+            box-shadow: 0 0 8px rgba(100, 180, 255, 0.4);
+        }
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        /* 奶凶图标：科幻圆形背景+光晕 */
+        .timeline-icon {
+            width: 68px;
+            height: 68px;
+            /* 科幻渐变背景 */
+            background: linear-gradient(135deg, rgba(100, 180, 255, 0.2), rgba(255, 153, 204, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 24px;
+            z-index: 1;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(100, 180, 255, 0.2);
+            box-shadow: 0 0 12px rgba(100, 180, 255, 0.2);
+        }
+        .timeline-item:hover .timeline-icon {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(100, 180, 255, 0.4);
+            background: linear-gradient(135deg, rgba(100, 180, 255, 0.3), rgba(255, 153, 204, 0.2));
+        }
+        /* 科幻毛玻璃卡片 */
+        .timeline-content {
+            flex: 1;
+            background: rgba(5, 10, 39, 0.6); /* 匹配科幻背景 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid rgba(100, 180, 255, 0.15); /* 科幻边框 */
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 30px rgba(0, 20, 80, 0.3);
+        }
+        .timeline-item:hover .timeline-content {
+            border: 1px solid rgba(100, 180, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 20, 80, 0.4);
+        }
+        .timeline-content h3 {
+            /* 科幻渐变标题 */
+            background: linear-gradient(to right, #64b4ff, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+        .timeline-content h3::after {
+            content: "🐾";
+            font-size: 1rem;
+        }
+        .timeline-content p {
+            color: #ffffff; /* 改用纯白色 */
+            font-size: 1.15rem; /* 放大字体 */
+            line-height: 1.9; /* 增加行高 */
+            font-weight: 500; /* 加粗 */
+        }
+
+        /* 激励标语：科幻渐变文字 */
+        .motivation {
+            text-align: center;
+            padding: 70px 0;
+            font-size: 1.6rem;
+            /* 科幻渐变文字 */
+            background: linear-gradient(to right, #64b4ff, #ffd700, #ff99cc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            border-top: 1px solid rgba(100, 180, 255, 0.1);
+            background-color: rgba(5, 10, 39, 0.2);
+            border-radius: 16px;
+            margin: 20px 0;
+            font-weight: 500;
+            text-shadow: 0 0 8px rgba(100, 180, 255, 0.3);
+        }
+        .motivation p {
+            margin-bottom: 16px;
+        }
+
+        /* 页脚：科幻风格+2026新版 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(100, 180, 255, 0.1);
+            color: #ffffff; /* 纯白色 */
+            font-size: 1.05rem;
+            font-weight: 400;
+            background: rgba(5, 10, 39, 0.3);
+            border-radius: 16px 16px 0 0;
+            margin-top: 20px;
+        }
+        .social-links {
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            /* 科幻渐变文字 */
+            background: linear-gradient(to right, #64b4ff, #ff99cc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0 16px;
+            text-decoration: none;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+        .social-links a:hover {
+            color: #64b4ff;
+            transform: translateY(-3px);
+            text-shadow: 0 0 8px rgba(100, 180, 255, 0.4);
+        }
+        footer p {
+            color: #e0e0e0; /* 亮灰色，更清晰 */
+        }
+
+        /* 响应式适配：手机端更精致，保证文字清晰 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            .timeline-item {
+                flex-direction: column;
+            }
+            .timeline-icon {
+                margin-bottom: 16px;
+                align-self: flex-start;
+            }
+            .timeline-item::before {
+                left: 26px;
+            }
+            .nav-links a {
+                margin-left: 16px;
+                font-size: 1rem;
+            }
+            .declaration p {
+                padding: 25px;
+                font-size: 1.2rem; /* 手机端也保证字体大小 */
+                line-height: 1.9;
+            }
+            .motivation {
+                font-size: 1.4rem;
+                padding: 50px 0;
+            }
+            .timeline-content p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 动态星空背景（科幻蓝调） -->
+    <div class="stars" id="stars"></div>
+
+    <!-- 顶部导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">冲出地球的喵喵</div>
+            <div class="nav-links">
+                <a href="#top">回到顶部</a>
+                <a href="#declaration">自由宣言</a>
+                <a href="#timeline">成长轨迹</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="top">
+        <!-- 头部标题 -->
+        <header>
+            <h1>🚀 冲出地球的<span>😼</span> 喵喵</h1>
+            <p class="subtitle">—— 2026，对自由的无尽向往，激励人类不断前行</p>
+            <div class="meow-icon" id="meowIcon">😾 点击我，领取奶凶自由语录</div>
+            <div class="quote-box" id="quoteBox"></div>
+        </header>
+
+        <!-- 自由宣言板块（核心优化） -->
+        <section class="declaration" id="declaration">
+            <h2>🗣️ 自由宣言</h2>
+            <p>
+                自由不是无拘无束，而是敢于冲破束缚的勇气；<br>
+                就像这只奶凶冲向星际的喵喵，从地球的小窝到无垠的宇宙，<br>
+                每一步都在证明：心之所向，素履以往，<br>
+                2026，人类的进步，永远始于对“不可能”的挑战。
+            </p>
+        </section>
+
+        <!-- 成长轨迹时间线 -->
+        <section class="timeline" id="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon">🏠</div>
+                <div class="timeline-content">
+                    <h3>第一步：诞生于地球的小窝</h3>
+                    <p>每一只奶凶喵喵都曾蜷缩在温暖的小窝里，对窗外的世界充满好奇。就像人类，最初的梦想也诞生于平凡的日常，2026，从小小窝开始，奔赴星海。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">✨</div>
+                <div class="timeline-content">
+                    <h3>第二步：第一次仰望星空</h3>
+                    <p>当喵喵第一次抬头看到星空，眼中闪烁的奶凶光芒，是对未知的渴望。人类也正是在仰望星空中，点燃了2026探索的火种。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">🚀</div>
+                <div class="timeline-content">
+                    <h3>第三步：突破大气层的束缚</h3>
+                    <p>挣脱地心引力，冲破大气层的那一刻，奶凶喵喵不再是地面上的宠物，而是自由的使者。2026，人类也在一次次突破中，拓展着生命的边界。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">🌌</div>
+                <div class="timeline-content">
+                    <h3>第四步：遨游星际的自由</h3>
+                    <p>在无垠的宇宙中，奶凶喵喵不再被任何规则定义。它的每一次跳跃，都是对自由最纯粹的诠释。这正是2026人类前进的终极动力。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">🌟</div>
+                <div class="timeline-content">
+                    <h3>第五步：成为自由的象征</h3>
+                    <p>当喵喵的身影出现在星际之间，它不再是一只猫，而是所有渴望自由的灵魂的化身。2026，它激励着每一个人：只要心怀向往，就能冲破一切限制。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 激励标语 -->
+        <section class="motivation">
+            <p>每一次突破，都是对自由的致敬；每一步前行，都在书写人类的未来。</p>
+            <p>—— 2026，冲出地球的喵喵，与你一同前行</p>
+        </section>
+
+        <!-- 页脚 -->
+        <footer>
+            <div class="social-links">
+                <a href="#">😼 喵星官网</a>
+                <a href="#">🚀 2026星际探索</a>
+                <a href="#">✨ 奶凶自由语录</a>
+            </div>
+            <p>© 2026 冲出地球的喵喵 | 用代码实现梦想，用自由定义未来</p>
+        </footer>
+    </div>
+
+    <!-- 互动JS：升级语录+星空粒子 -->
+    <script>
+        // 1. 奶凶自由语录库（2026新版）
+        const meowIcon = document.getElementById('meowIcon');
+        const quoteBox = document.getElementById('quoteBox');
+        const quotes = [
+            "2026，自由是灵魂的翅膀，永远不要让它被束缚 🪽😼",
+            "星星不会因为黑夜而熄灭，就像梦想不会因为困难而止步 ✨😾",
+            "从地球到宇宙，2026只差“敢出发”的一步 🚀🐾",
+            "奶凶喵喵的自由，是人类心底最纯粹的渴望 🐱🔥",
+            "2026突破不是偶然，是日复一日对自由的向往 💪😼"
+        ];
+        // 点击事件：更丝滑的显示/隐藏
+        meowIcon.addEventListener('click', () => {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            quoteBox.textContent = randomQuote;
+            // 淡入动画
+            quoteBox.style.display = 'block';
+            quoteBox.style.opacity = 0;
+            let opacity = 0;
+            const fadeIn = setInterval(() => {
+                if (opacity >= 1) clearInterval(fadeIn);
+                quoteBox.style.opacity = opacity;
+                opacity += 0.1;
+            }, 30);
+            // 3秒后淡隐
+            setTimeout(() => {
+                let opacity = 1;
+                const fadeOut = setInterval(() => {
+                    if (opacity <= 0) {
+                        clearInterval(fadeOut);
+                        quoteBox.style.display = 'none';
+                    }
+                    quoteBox.style.opacity = opacity;
+                    opacity -= 0.1;
+                }, 50);
+            }, 3000);
+        });
+
+        // 2. 升级星空粒子：科幻蓝调，降低亮度避免干扰
+        const stars = document.getElementById('stars');
+        const starCount = 150; // 更多星星，更密的星空
+        const starSizes = ['small', 'medium', 'large'];
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            // 随机大小层级
+            const sizeClass = starSizes[Math.floor(Math.random() * starSizes.length)];
+            star.classList.add('star', sizeClass);
+            // 随机位置（更均匀）
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * 100}vh`;
+            // 随机闪烁延迟（更自然）
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            stars.appendChild(star);
+        }
+    </script>
+</body>
+</html>
